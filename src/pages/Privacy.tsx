@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './Privacy.css'
 
@@ -157,6 +158,10 @@ const sections = [
 ]
 
 export default function Privacy() {
+  useEffect(() => {
+    document.title = 'Política de Privacidade — Physix'
+  }, [])
+
   return (
     <div className="privacy">
       <div className="glow glow-a" />

@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './Home.css'
 
@@ -25,6 +26,10 @@ const features = [
 ]
 
 export default function Home() {
+  useEffect(() => {
+    document.title = 'Physix — Painel pessoal de saúde'
+  }, [])
+
   return (
     <div className="home">
       <div className="glow glow-a" />
