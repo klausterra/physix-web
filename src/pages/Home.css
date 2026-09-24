@@ -167,9 +167,19 @@
   font-size: 15px;
 }
 
+.fineprint {
+  font-size: 13px !important;
+  color: var(--muted) !important;
+  opacity: 0.9;
+}
+
 .link-arrow {
   font-weight: 700;
   font-size: 15px;
+}
+
+.privacy-band .fineprint {
+  margin-bottom: 18px;
 }
 
 .footer {

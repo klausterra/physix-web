@@ -19,8 +19,8 @@ const features = [
     tone: 'violet',
   },
   {
-    title: 'Balança CS20E por Bluetooth',
-    body: 'Pise na balança e a medição é capturada, validada e salva automaticamente. Nenhum botão é necessário durante uma pesagem.',
+    title: 'Funciona sem internet',
+    body: 'Leitura do Health Connect, cálculos, histórico e a balança CS20E por Bluetooth operam no seu aparelho. Login e backup em nuvem são opcionais.',
     tone: 'cyan',
   },
 ]
@@ -71,9 +71,14 @@ export default function Home() {
         <section className="privacy-band">
           <h2>Privacidade em primeiro lugar</h2>
           <p>
-            Dados de saúde são sensíveis. O Physix não tem servidor, não tem backend e
-            não envia nada para terceiros. Todo o processamento e armazenamento acontece
-            no seu aparelho, e o app funciona offline.
+            Dados de saúde são sensíveis. O Physix processa e armazena tudo no seu
+            aparelho por padrão — leitura do Health Connect, composição corporal,
+            tendências e a balança Bluetooth funcionam sem internet. Nenhum dado de
+            saúde é enviado para a nuvem sem a sua autorização expressa.
+          </p>
+          <p className="fineprint">
+            Conta e recursos sociais usam o Google Cloud (Firebase) com servidores em São
+            Paulo. A sincronização de métricas de saúde é opcional e vem desligada.
           </p>
           <Link to="/privacidade" className="link-arrow">
             Ler a política completa →

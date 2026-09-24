@@ -4,153 +4,268 @@ import './Privacy.css'
 
 const sections = [
   {
-    title: '1. Visão Geral e Princípio Offline-First',
+    title: '1. Visão Geral da Arquitetura',
     body: (
       <>
         <p>
           O aplicativo <span className="hl">Physix</span> (desenvolvido por Klaus
-          Quirino Terra, pacote <code>br.com.klausterra.projetosaude</code>) foi
-          desenvolvido com a privacidade como pilar fundamental.
+          Quirino Terra, pacote <code>br.com.klausterra.projetosaude</code>) usa uma
+          arquitetura <span className="hl">híbrida, com o aparelho como fonte de
+          verdade</span>.
         </p>
         <p>
-          O aplicativo adota a arquitetura <span className="hl">100% local
-          (offline-first)</span>. Não mantemos servidores externos de nuvem, banco de
-          dados remoto ou plataformas proprietárias de analytics. Todos os seus
-          registros permanecem exclusivamente no armazenamento interno do seu próprio
-          dispositivo Android.
+          <strong>Processamento local (sempre):</strong> leitura do Health Connect,
+          cálculo de baselines, tendências, correlações, insights, composição corporal
+          e captura da balança Bluetooth acontecem inteiramente no seu aparelho. O
+          aplicativo funciona por completo sem conexão à internet.
+        </p>
+        <p>
+          <strong>Sincronização opcional em nuvem:</strong> quando você cria uma conta,
+          parte dos dados é sincronizada para permitir login em vários aparelhos e os
+          recursos sociais. A nuvem é usada apenas para o que você ativa explicitamente.
+          Nenhum dado é enviado sem o seu consentimento.
         </p>
       </>
     ),
   },
   {
-    title: '2. Dados Coletados e Finalidade',
+    title: '2. Dados Processados Apenas no Aparelho',
     body: (
       <>
         <p>
-          O Physix acessa e processa as seguintes categorias de dados biométricos e
-          fisiológicos exclusivamente para cálculo de baselines pessoais e exibição de
-          painéis informativos:
+          As categorias abaixo <strong>nunca saem do seu dispositivo</strong> por padrão.
+          Elas são lidas via Health Connect, processadas localmente e armazenadas em banco
+          criptografado no próprio aparelho:
         </p>
         <ul>
           <li>
-            <strong>Health Connect:</strong> leitura de passos, frequência cardíaca,
-            frequência cardíaca de repouso, saturação de oxigênio (SpO2), pressão
-            arterial, sessões de sono e sessões de exercícios originadas do seu
-            ecossistema (por exemplo, Samsung Health).
+            <strong>Health Connect:</strong> passos, frequência cardíaca, frequência
+            cardíaca de repouso, saturação de oxigênio (SpO2), pressão arterial, sessões
+            de sono e sessões de exercícios (por exemplo, origem Samsung Health).
           </li>
           <li>
-            <strong>Composição corporal:</strong> peso, índice de massa corporal (IMC),
-            percentual de gordura corporal, massa magra, percentual de músculo
-            esquelético, hidratação corporal, massa óssea e taxa metabólica basal.
+            <strong>Composição corporal:</strong> peso, IMC, percentual de gordura, massa
+            magra, percentual de músculo esquelético, hidratação, massa óssea, taxa
+            metabólica basal e impedância.
           </li>
           <li>
-            <strong>Escrita no Health Connect:</strong> gravação local do peso e
-            percentual de gordura capturados diretamente de balanças inteligentes
-            (quando autorizado expressamente pelo usuário).
-          </li>
-          <li>
-            <strong>Dispositivos Bluetooth (BLE):</strong> comunicação direta com a
-            balança de bioimpedância modelo CS20E via Bluetooth Low Energy
-            exclusivamente para captura de peso e impedância durante o momento em que
-            você sobe na balança. O aplicativo não coleta nem rastreia sua localização
+            <strong>Dispositivos Bluetooth (BLE):</strong> comunicação com a balança de
+            bioimpedância CS20E para captura de peso e impedância no momento da pesagem.
+            O app declara <code>neverForLocation</code> e não acessa sua localização
             geográfica.
           </li>
         </ul>
+        <p>
+          <strong>Envio opcional para a nuvem:</strong> você pode optar por sincronizar
+          as séries de saúde (peso, HRV, sono) para backup e uso em outros aparelhos.
+          Essa opção vem <strong>desligada por padrão</strong> e só passa a valer com sua
+          autorização expressa, que pode ser revogada a qualquer momento nas configurações.
+        </p>
       </>
     ),
   },
   {
-    title: '3. Política de Não Compartilhamento com Terceiros',
+    title: '3. Dados Sincronizados em Nuvem',
     body: (
       <>
         <p>
-          Em conformidade rígida com as Políticas para Desenvolvedores do Google Play e
-          os Termos do Health Connect:
+          Quando você cria uma conta, os dados abaixo são armazenados no Google Cloud
+          (Firebase Authentication e Cloud Firestore), com servidores localizados em São
+          Paulo, Brasil:
         </p>
         <ul>
           <li>
-            <strong>Sem venda de dados:</strong> seus dados de saúde nunca são vendidos
-            a terceiros, anunciantes ou corretores de dados.
+            <strong>Credenciais de acesso:</strong> endereço de e-mail e senha. A senha
+            nunca é armazenada em texto legível — é gerenciada pelo Firebase
+            Authentication com hash criptográfico. Se você entrar com a Conta do Google,
+            recebemos apenas o identificador, nome e foto do perfil.
           </li>
           <li>
-            <strong>Sem publicidade direcionada:</strong> não utilizamos seus dados
-            médicos ou fisiológicos para publicidade, marketing ou definição de perfil
-            comportamental.
+            <strong>Perfil público:</strong> nome de usuário (@), nome de exibição,
+            biografia, link e avatar — os campos que você escolhe preencher e que ficam
+            visíveis para outros usuários do aplicativo.
           </li>
           <li>
-            <strong>Sem transferência para nuvem:</strong> seus dados de saúde não são
-            transmitidos para nenhum servidor externo.
+            <strong>Recursos sociais:</strong> treinos publicados, publicações, relações
+            de seguir/seguidor e participações em desafios. Esses dados são visíveis a
+            outros usuários autenticados, porque é isso que permite a interação social.
+          </li>
+          <li>
+            <strong>Séries de saúde (somente com sua autorização):</strong> quando você
+            ativa a sincronização de saúde, as métricas do item 2 também são gravadas.
+            Essas coleções têm regras de segurança que permitem leitura
+            <strong> exclusivamente pelo próprio dono</strong> — nenhum outro usuário, nem
+            mesmo em recursos sociais, acessa seus dados de saúde.
           </li>
         </ul>
       </>
     ),
   },
   {
-    title: '4. Permissões Solicitadas',
+    title: '4. Compromissos de Não Compartilhamento',
+    body: (
+      <>
+        <ul>
+          <li>
+            <strong>Sem venda de dados:</strong> seus dados nunca são vendidos, alugados
+            ou cedidos a anunciantes, corretores de dados ou terceiros.
+          </li>
+          <li>
+            <strong>Sem publicidade:</strong> o aplicativo não exibe anúncios e não usa
+            seus dados de saúde ou perfil para publicidade ou definição de perfil
+            comportamental.
+          </li>
+          <li>
+            <strong>Sem rastreamento entre apps:</strong> não integramos SDKs de
+            analytics comportamental nem identificadores de publicidade
+            (<code>AD_ID</code>).
+          </li>
+          <li>
+            <strong>Sem uso de dados de saúde para marketing:</strong> métricas
+            fisiológicas jamais alimentam comunicação promocional.
+          </li>
+        </ul>
+      </>
+    ),
+  },
+  {
+    title: '5. Operadores de Infraestrutura',
     body: (
       <>
         <p>
-          O aplicativo solicita apenas as permissões indispensáveis para seu
-          funcionamento local:
+          Para oferecer login e sincronização, usamos serviços do <strong>Google
+          Cloud</strong> (Firebase Authentication e Cloud Firestore). O Google atua como
+          operador de infraestrutura, processando os dados apenas para nos prestar o
+          serviço, sob os termos de proteção de dados do Google Cloud.
         </p>
+        <p>
+          Não há outros terceiros recebendo seus dados. O aplicativo não possui SDKs de
+          redes sociais, redes de anúncios ou ferramentas de rastreamento.
+        </p>
+      </>
+    ),
+  },
+  {
+    title: '6. Permissões Solicitadas',
+    body: (
+      <>
         <ul>
           <li>
-            <code>BLUETOOTH_SCAN</code> e <code>BLUETOOTH_CONNECT</code>: para detectar
-            e receber a pesagem da balança CS20E nas proximidades. Declarado com{' '}
+            <code>BLUETOOTH_SCAN</code> e <code>BLUETOOTH_CONNECT</code>: detectar e
+            receber a pesagem da balança CS20E. Declarado com{' '}
             <code>neverForLocation</code> para garantir que sua localização nunca seja
             acessada.
           </li>
           <li>
-            Permissões de leitura e gravação do <code>Health Connect</code>: exibidas no
-            painel de permissões do sistema Android para consentimento explícito.
+            <code>Health Connect</code> (leitura e gravação): consentimento explícito no
+            painel de permissões do sistema Android.
+          </li>
+          <li>
+            <code>INTERNET</code>: usada exclusivamente para autenticação e
+            sincronização. O aplicativo continua funcional sem ela.
           </li>
         </ul>
       </>
     ),
   },
   {
-    title: '5. Retenção e Exclusão de Dados',
+    title: '7. Retenção e Exclusão de Dados',
     body: (
       <>
-        <p>Você tem total controle sobre seus dados:</p>
+        <p>Você mantém controle total sobre seus dados:</p>
         <ul>
           <li>
-            Os dados locais persistem apenas enquanto o aplicativo permanecer instalado
-            no seu dispositivo.
+            <strong>Dados locais:</strong> persistem apenas enquanto o aplicativo
+            estiver instalado. Limpar os dados nas configurações do Android ou
+            desinstalar remove tudo imediatamente.
           </li>
           <li>
-            Para excluir todos os registros locais imediatamente, basta limpar os dados
-            do aplicativo nas Configurações do Android ou desinstalar o Physix.
+            <strong>Exclusão de conta no aplicativo:</strong> o botão de excluir conta
+            remove o perfil, os dados sociais e as séries de saúde do Firestore
+            <strong> imediatamente</strong>, e em seguida encerra a conta de
+            autenticação.
           </li>
           <li>
-            Registros gravados no Health Connect podem ser visualizados, alterados ou
-            excluídos a qualquer momento diretamente nas configurações de privacidade do
-            Health Connect do Android.
+            <strong>Prazo máximo:</strong> eventual resíduo em backups ou registros de
+            sistema é eliminado em até 30 dias.
+          </li>
+          <li>
+            <strong>Health Connect:</strong> registros gravados por nós podem ser
+            visualizados ou excluídos a qualquer momento nas configurações do próprio
+            Health Connect.
           </li>
         </ul>
       </>
     ),
   },
   {
-    title: '6. Isenção de Diagnóstico Médico',
+    title: '8. Segurança',
+    body: (
+      <>
+        <p>
+          Todo tráfego entre o aplicativo e a nuvem é criptografado em trânsito (TLS).
+          Os dados em repouso são criptografados pelo Google Cloud. As regras de acesso do
+          banco impõem que cada usuário só leia e escreva os próprios documentos, com
+          exceção dos campos de perfil que você opta por tornar públicos.
+        </p>
+        <p>
+          O armazenamento local usa o sandbox do Android e o backup automático está
+          desativado (<code>allowBackup=false</code>), impedindo que dados de saúde saiam
+          em cópias de segurança do sistema.
+        </p>
+      </>
+    ),
+  },
+  {
+    title: '9. Seus Direitos (LGPD)',
+    body: (
+      <>
+        <p>
+          Em conformidade com a Lei Geral de Proteção de Dados, você tem direito a
+          confirmação de tratamento, acesso, correção, portabilidade e eliminação dos seus
+          dados. O aplicativo oferece exportação completa em arquivo e exclusão definitiva
+          dentro do próprio app, sem necessidade de solicitação por e-mail.
+        </p>
+        <p>
+          Para exercer qualquer outro direito, use o contato abaixo.
+        </p>
+      </>
+    ),
+  },
+  {
+    title: '10. Isenção de Diagnóstico Médico',
     body: (
       <p>
         O Physix é um painel informativo pessoal para acompanhamento de bem-estar,
-        evolução física e tendências de estilo de vida. As estimativas de bioimpedância
-        e scores de equilíbrio não substituem parecer médico profissional, exames
+        evolução física e tendências de estilo de vida. As estimativas de bioimpedância e
+        os scores de equilíbrio não substituem parecer médico profissional, exames
         laboratoriais clínicos ou diagnóstico médico.
       </p>
     ),
   },
   {
-    title: '7. Contato do Desenvolvedor',
+    title: '11. Alterações nesta Política',
+    body: (
+      <p>
+        Mudanças materiais nesta política são comunicadas dentro do aplicativo antes de
+        entrar em vigor. A data de última atualização no topo desta página indica a
+        versão vigente.
+      </p>
+    ),
+  },
+  {
+    title: '12. Contato do Desenvolvedor',
     body: (
       <>
-        <p>Para dúvidas sobre esta política ou sobre o funcionamento do aplicativo:</p>
+        <p>
+          Para dúvidas sobre esta política, exercício de direitos ou solicitações
+          relacionadas a dados:
+        </p>
         <p>
           <strong>Desenvolvedor:</strong> Klaus Quirino Terra
           <br />
-          <strong>E-mail:</strong> klausqterra@gmail.com
+          <strong>E-mail:</strong>{' '}
+          <a href="mailto:klausqterra@gmail.com">klausqterra@gmail.com</a>
         </p>
       </>
     ),
