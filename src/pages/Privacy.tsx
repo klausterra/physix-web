@@ -54,12 +54,6 @@ const sections = [
             metabólica basal e impedância.
           </li>
           <li>
-            <strong>Dispositivos Bluetooth (BLE):</strong> comunicação com a balança de
-            bioimpedância CS20E para captura de peso e impedância no momento da pesagem.
-            O app declara <code>neverForLocation</code> e não acessa sua localização
-            geográfica.
-          </li>
-          <li>
             <strong>Treinos e rotinas:</strong> treinos registrados, rotinas, pastas e
             exercícios personalizados ficam no aparelho, a menos que você ative o backup
             de treinos (seção 4).
@@ -90,10 +84,9 @@ const sections = [
         </p>
         <ul>
           <li>
-            <strong>Credenciais de acesso:</strong> endereço de e-mail e senha. A senha
-            nunca é armazenada em texto legível — é gerenciada pelo Firebase
-            Authentication com hash criptográfico. Se você entrar com a Conta do Google,
-            recebemos apenas o identificador, nome e foto do perfil.
+            <strong>Credenciais de acesso:</strong> o login é feito apenas com a Conta do
+            Google, via Firebase Authentication. Recebemos somente o identificador, o
+            e-mail, o nome e a foto do perfil; o Physix não recebe nem armazena sua senha.
           </li>
           <li>
             <strong>Perfil público:</strong> nome de usuário (@), nome de exibição,
@@ -235,11 +228,11 @@ const sections = [
           <li>
             no servidor ficam somente contadores de cota de uso e registros técnicos sem o
             conteúdo das mensagens, associados a um identificador pseudonimizado (hash com
-            salt) em vez do seu identificador de conta;
+            salt) em vez do seu identificador de conta, por até 90 dias;
           </li>
           <li>
             se você denunciar uma resposta, guardamos o trecho denunciado para análise e
-            melhoria da segurança do recurso.
+            melhoria da segurança do recurso, por até 90 dias.
           </li>
         </ul>
         <p>
@@ -316,12 +309,6 @@ const sections = [
     body: (
       <>
         <ul>
-          <li>
-            <code>BLUETOOTH_SCAN</code> e <code>BLUETOOTH_CONNECT</code>: detectar e
-            receber a pesagem da balança CS20E. Declarado com{' '}
-            <code>neverForLocation</code> para garantir que sua localização nunca seja
-            acessada.
-          </li>
           <li>
             <code>Health Connect</code> (leitura e gravação): consentimento explícito no
             painel de permissões do sistema Android.

@@ -20,7 +20,7 @@ const features = [
   },
   {
     title: 'Funciona sem internet',
-    body: 'Leitura do Health Connect, cálculos, histórico e a balança CS20E por Bluetooth operam no seu aparelho. Login e backup em nuvem são opcionais.',
+    body: 'Depois do login com Google, leitura do Health Connect, cálculos, histórico e treinos operam no seu aparelho. Backup em nuvem e Treinador IA são opcionais.',
     tone: 'cyan',
   },
 ]
@@ -73,7 +73,7 @@ export default function Home() {
           <p>
             Dados de saúde são sensíveis. O Physix processa e armazena tudo no seu
             aparelho por padrão — leitura do Health Connect, composição corporal,
-            tendências e a balança Bluetooth funcionam sem internet. Nenhum dado de
+            tendências e treinos funcionam sem internet após o login. Nenhum dado de
             saúde é enviado para a nuvem sem a sua autorização expressa.
           </p>
           <p className="fineprint">
