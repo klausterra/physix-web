@@ -24,7 +24,8 @@ const sections = [
           usada para identificar você e para os recursos sociais. Além disso, existem
           recursos <strong>opcionais, desligados por padrão</strong>, que só enviam dados
           depois do seu consentimento específico: o backup e sincronização de treinos
-          (seção 4), o Treinador IA (seção 5) e o envio de séries de saúde (seção 3).
+          (seção 5), o Treinador IA (seção 6), o envio de séries de saúde (seção 3) e as
+          notificações no aparelho (seção 4).
           Fora os dados necessários para a conta e o perfil, nenhum dado de saúde ou de
           treino é enviado sem o seu consentimento, que pode ser revogado a qualquer
           momento.
@@ -40,7 +41,7 @@ const sections = [
           As categorias abaixo <strong>não saem do seu dispositivo</strong> por padrão.
           Elas são lidas via Health Connect ou registradas por você, processadas
           localmente e armazenadas no próprio aparelho. Algumas delas só são enviadas à
-          nuvem se você ativar um dos recursos opcionais descritos nas seções 3, 4 e 5:
+          nuvem se você ativar um dos recursos opcionais descritos nas seções 3, 5 e 6:
         </p>
         <ul>
           <li>
@@ -56,7 +57,7 @@ const sections = [
           <li>
             <strong>Treinos e rotinas:</strong> treinos registrados, rotinas, pastas e
             exercícios personalizados ficam no aparelho, a menos que você ative o backup
-            de treinos (seção 4).
+            de treinos (seção 5).
           </li>
           <li>
             <strong>Sempre locais:</strong> recordes pessoais (recalculados no aparelho a
@@ -107,14 +108,78 @@ const sections = [
           </li>
           <li>
             <strong>Backup de treinos (somente com sua autorização):</strong> detalhado
-            na seção 4.
+            na seção 5.
+          </li>
+          <li>
+            <strong>Token de push (somente com as notificações ligadas):</strong> o
+            identificador de instalação do aparelho e o token do serviço de mensagens,
+            detalhados na seção 4.
           </li>
         </ul>
       </>
     ),
   },
   {
-    title: '4. Backup e Sincronização de Treinos (opcional)',
+    title: '4. Notificações no aparelho (push)',
+    body: (
+      <>
+        <p>
+          As notificações no aparelho são <strong>opcionais e desligadas por padrão</strong>.
+          Elas só passam a valer quando você ativa a opção no aplicativo e concede a
+          permissão de notificações do Android.
+        </p>
+        <p>
+          <strong>Para que servem:</strong> avisar de interações no seu conteúdo — novo
+          seguidor, curtida no seu treino, comentário, resposta e menção.
+        </p>
+        <p>
+          <strong>O que é enviado:</strong>
+        </p>
+        <ul>
+          <li>
+            o <strong>token do aparelho</strong> (identificador de instalação gerado pelo
+            serviço de mensagens), guardado em{' '}
+            <code>physix/data/fcm_tokens</code> junto com a plataforma e a data de
+            atualização;
+          </li>
+          <li>
+            uma <strong>cópia das suas preferências de notificação</strong>, guardada em{' '}
+            <code>physix/data/notification_prefs</code>;
+          </li>
+          <li>
+            o <strong>texto da notificação</strong> (título e corpo fixos, gerados no
+            aplicativo ou no servidor) enviado ao serviço de mensagens no momento da
+            interação.
+          </li>
+        </ul>
+        <p>
+          <strong>Quem processa:</strong> o <strong>Google Firebase Cloud Messaging
+          (FCM)</strong> entrega a notificação ao aparelho. O envio é disparado por Cloud
+          Functions do Physix quando alguém interage com o seu conteúdo.
+        </p>
+        <p>
+          <strong>O que não é enviado:</strong> o conteúdo da notificação não inclui
+          dado de saúde nem o texto das suas mensagens.
+        </p>
+        <p>
+          <strong>Transferência internacional:</strong> o Firebase Cloud Messaging é
+          operado pelo Google e pode processar os dados do token e o texto da notificação
+          fora do Brasil. Essa transferência internacional (LGPD, art. 33) ocorre com base
+          no seu consentimento e nas garantias contratuais de proteção de dados do Google
+          Cloud.
+        </p>
+        <p>
+          <strong>Como desligar:</strong> você pode desativar as notificações nas
+          preferências do aplicativo a qualquer momento. Desligar <strong>remove o token
+          do aparelho</strong> e interrompe novos envios, mas <strong>não apaga o
+          histórico já salvo</strong> — as notificações antigas continuam visíveis na
+          central do aplicativo até você excluí-las ou excluir a conta.
+        </p>
+      </>
+    ),
+  },
+  {
+    title: '5. Backup e Sincronização de Treinos (opcional)',
     body: (
       <>
         <p>
@@ -182,7 +247,7 @@ const sections = [
     ),
   },
   {
-    title: '5. Treinador IA (opcional)',
+    title: '6. Treinador IA (opcional)',
     body: (
       <>
         <p>
@@ -251,7 +316,7 @@ const sections = [
     ),
   },
   {
-    title: '6. Compromissos de Não Compartilhamento',
+    title: '7. Compromissos de Não Compartilhamento',
     body: (
       <>
         <ul>
@@ -275,27 +340,28 @@ const sections = [
           </li>
           <li>
             <strong>Sem treinamento de modelos de terceiros:</strong> o conteúdo enviado
-            ao Treinador IA não é usado pelo Google para treinar modelos (seção 5).
+            ao Treinador IA não é usado pelo Google para treinar modelos (seção 6).
           </li>
         </ul>
       </>
     ),
   },
   {
-    title: '7. Operadores de Infraestrutura',
+    title: '8. Operadores de Infraestrutura',
     body: (
       <>
         <p>
-          Para oferecer login, sincronização, backup de treinos e o Treinador IA, usamos
-          serviços do <strong>Google Cloud</strong> (Firebase Authentication, Cloud
-          Firestore, Cloud Functions e Vertex AI / Gemini). O Google atua como operador
+          Para oferecer login, sincronização, backup de treinos, o Treinador IA e as
+          notificações no aparelho, usamos serviços do <strong>Google Cloud</strong>
+          (Firebase Authentication, Cloud Firestore, Cloud Functions, Firebase Cloud
+          Messaging e Vertex AI / Gemini). O Google atua como operador
           de infraestrutura, processando os dados apenas para nos prestar o serviço, sob
           os termos de proteção de dados do Google Cloud.
         </p>
         <p>
           Firestore fica na região de São Paulo (<code>southamerica-east1</code>). O
-          modelo de IA é acessado pelo endpoint global do Vertex AI e pode processar dados
-          fora do Brasil, conforme a seção 5.
+          modelo de IA é acessado pelo endpoint global do Vertex AI e o Firebase Cloud
+          Messaging pode processar dados fora do Brasil, conforme as seções 4 e 6.
         </p>
         <p>
           Não há outros terceiros recebendo seus dados. O aplicativo não possui SDKs de
@@ -305,7 +371,7 @@ const sections = [
     ),
   },
   {
-    title: '8. Permissões Solicitadas',
+    title: '9. Permissões Solicitadas',
     body: (
       <>
         <ul>
@@ -315,15 +381,22 @@ const sections = [
           </li>
           <li>
             <code>INTERNET</code>: usada exclusivamente para autenticação, recursos
-            sociais, sincronização e backup opcionais e o Treinador IA. Depois do login,
-            os recursos locais continuam funcionando sem ela.
+            sociais, sincronização e backup opcionais, o Treinador IA e o envio das
+            notificações. Depois do login, os recursos locais continuam funcionando sem
+            ela.
+          </li>
+          <li>
+            <code>POST_NOTIFICATIONS</code>: usada para mostrar notificações no aparelho
+            (treino ativo e avisos de interação no seu conteúdo). É pedida pelo sistema
+            Android e pode ser revogada a qualquer momento nas configurações do aparelho
+            — sem ela, o aplicativo não mostra esses avisos.
           </li>
         </ul>
       </>
     ),
   },
   {
-    title: '9. Retenção e Exclusão de Dados',
+    title: '10. Retenção e Exclusão de Dados',
     body: (
       <>
         <p>Você mantém controle total sobre seus dados:</p>
@@ -335,18 +408,25 @@ const sections = [
           </li>
           <li>
             <strong>Exclusão de conta no aplicativo:</strong> o botão de excluir conta
-            remove o perfil, os dados sociais, as séries de saúde e o backup de treinos
-            do Firestore <strong> imediatamente</strong>, e em seguida encerra a conta de
-            autenticação.
+            remove o perfil, os dados sociais, as séries de saúde, o backup de treinos e
+            o token de push do Firestore <strong> imediatamente</strong>, e em seguida
+            encerra a conta de autenticação.
           </li>
           <li>
             <strong>Backup de treinos:</strong> pode ser apagado a qualquer momento pela
-            opção “Apagar dados da nuvem”, sem excluir a conta (detalhes na seção 4).
+            opção “Apagar dados da nuvem”, sem excluir a conta (detalhes na seção 5).
           </li>
           <li>
             <strong>Treinador IA:</strong> o histórico de conversas fica no aparelho e é
             removido com os dados do aplicativo; no servidor não há conteúdo das
-            conversas, apenas os registros descritos na seção 5.
+            conversas, apenas os registros descritos na seção 6.
+          </li>
+          <li>
+            <strong>Notificações no aparelho:</strong> o token e as preferências podem
+            ser removidos a qualquer momento desligando as notificações no aplicativo
+            (detalhes na seção 4). O histórico das notificações já recebidas permanece no
+            aparelho até você apagá-lo nas configurações do Android, excluir a conta ou
+            desinstalar o aplicativo.
           </li>
           <li>
             <strong>Prazo máximo:</strong> eventual resíduo em backups ou registros de
@@ -362,7 +442,7 @@ const sections = [
     ),
   },
   {
-    title: '10. Segurança',
+    title: '11. Segurança',
     body: (
       <>
         <p>
@@ -380,7 +460,7 @@ const sections = [
     ),
   },
   {
-    title: '11. Seus Direitos (LGPD)',
+    title: '12. Seus Direitos (LGPD)',
     body: (
       <>
         <p>
@@ -391,9 +471,9 @@ const sections = [
         </p>
         <p>
           Quando o tratamento se baseia em consentimento (backup de treinos, envio de
-          dados de saúde e Treinador IA), você pode revogá-lo a qualquer momento nas
-          configurações do aplicativo, sem afetar o tratamento realizado antes da
-          revogação.
+          dados de saúde, Treinador IA e notificações no aparelho), você pode revogá-lo a
+          qualquer momento nas configurações do aplicativo, sem afetar o tratamento
+          realizado antes da revogação.
         </p>
         <p>
           Para exercer qualquer outro direito, use o contato abaixo.
@@ -402,7 +482,7 @@ const sections = [
     ),
   },
   {
-    title: '12. Isenção de Diagnóstico Médico',
+    title: '13. Isenção de Diagnóstico Médico',
     body: (
       <p>
         O Physix é um painel informativo pessoal para acompanhamento de bem-estar,
@@ -413,7 +493,7 @@ const sections = [
     ),
   },
   {
-    title: '13. Alterações nesta Política',
+    title: '14. Alterações nesta Política',
     body: (
       <p>
         Mudanças materiais nesta política são comunicadas dentro do aplicativo antes de
@@ -423,7 +503,7 @@ const sections = [
     ),
   },
   {
-    title: '14. Contato do Desenvolvedor',
+    title: '15. Contato do Desenvolvedor',
     body: (
       <>
         <p>
@@ -456,7 +536,7 @@ export default function Privacy() {
 
         <span className="badge">Privacidade e Proteção de Dados</span>
         <h1>Política de Privacidade — Physix</h1>
-        <p className="date">Versão 2026-10-01 · Última atualização: 1º de outubro de 2026</p>
+        <p className="date">Versão 2026-10-02 · Última atualização: 2 de outubro de 2026</p>
 
         {sections.map((s) => (
           <article key={s.title} className="section">

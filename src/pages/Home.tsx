@@ -23,6 +23,11 @@ const features = [
     body: 'Depois do login com Google, leitura do Health Connect, cálculos, histórico e treinos operam no seu aparelho. Backup em nuvem e Treinador IA são opcionais.',
     tone: 'cyan',
   },
+  {
+    title: 'Avisos do que importa',
+    body: 'Notificações de novo seguidor, curtida, comentário, resposta e menção — só no seu aparelho, opcionais e desligadas por padrão. Sem dado de saúde no aviso.',
+    tone: 'lime',
+  },
 ]
 
 export default function Home() {
@@ -78,7 +83,9 @@ export default function Home() {
           </p>
           <p className="fineprint">
             Conta e recursos sociais usam o Google Cloud (Firebase) com servidores em São
-            Paulo. A sincronização de métricas de saúde é opcional e vem desligada.
+            Paulo. A sincronização de métricas de saúde é opcional e vem desligada. As
+            notificações no aparelho também são opcionais: sem dado de saúde no aviso e
+            desligáveis a qualquer momento.
           </p>
           <Link to="/privacidade" className="link-arrow">
             Ler a política completa →
