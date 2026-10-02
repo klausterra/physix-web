@@ -100,6 +100,11 @@ export default function Home() {
             Índices de composição corporal são estimativas por bioimpedância e não
             constituem diagnóstico médico.
           </p>
+          <p className="footer-links">
+            <Link to="/privacidade">Política de Privacidade</Link> ·{' '}
+            <Link to="/termos">Termos de Uso</Link> ·{' '}
+            <Link to="/suporte">Suporte</Link>
+          </p>
         </footer>
       </main>
     </div>

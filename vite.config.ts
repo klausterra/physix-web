@@ -10,6 +10,8 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         privacidade: resolve(__dirname, 'privacidade.html'),
+        termos: resolve(__dirname, 'termos.html'),
+        suporte: resolve(__dirname, 'suporte.html'),
       },
     },
   },
