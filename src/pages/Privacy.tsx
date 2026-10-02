@@ -545,7 +545,12 @@ export default function Privacy() {
           </article>
         ))}
 
-        <footer className="footer">© 2026 Physix · Todos os direitos reservados.</footer>
+        <footer className="footer">
+          © 2026 Physix · Todos os direitos reservados.
+          <br />
+          <Link to="/termos">Termos de Uso</Link> ·{' '}
+          <Link to="/suporte">Suporte</Link>
+        </footer>
       </main>
     </div>
   )
